@@ -24,9 +24,10 @@ class SuperListCreateAPIView(ListCreateAPIView):
             queryset = queryset.filter(super_type__type__icontains=type)
             return Response(self.get_serializer(queryset, many=True).data)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response({"heroes": queryset.filter(super_type__type__icontains="hero"),
-                         "villains": queryset.filter(super_type__type__icontains="villain"), })
+        heroes_queryset = queryset.filter(super_type__type__icontains="hero")
+        villain_queryset = queryset.filter(super_type__type__icontains="villain")
+        return Response({"heroes": self.get_serializer(heroes_queryset, many=True).data,
+                         "villains": self.get_serializer(villain_queryset, many=True).data, })
 
 
 class SuperRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
