@@ -20,12 +20,12 @@ class SuperListCreateAPIView(ListCreateAPIView):
         if type == "villian":
             queryset = queryset.filter(super_type__type__icontains=type)
             return Response(self.get_serializer(queryset, many=True).data)
-        elif type == "heroe":
+        elif type == "hero":
             queryset = queryset.filter(super_type__type__icontains=type)
             return Response(self.get_serializer(queryset, many=True).data)
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response({"heroes": queryset.filter(super_type__type__icontains="heroe"),
+        return Response({"heroes": queryset.filter(super_type__type__icontains="hero"),
                          "villains": queryset.filter(super_type__type__icontains="villain"), })
 
 
